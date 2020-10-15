@@ -50,6 +50,9 @@ export default {
             ),
         });
 
+        let { open_on_weekends } = req.body;
+        open_on_weekends = open_on_weekends.toLowerCase() === 'true';
+
         await schema.validate(
             { ...req.body, images },
             {
@@ -57,7 +60,7 @@ export default {
             }
         );
 
-        const orphanage = orphanagesRepository.create({ ...req.body, images });
+        const orphanage = orphanagesRepository.create({ ...req.body, open_on_weekends, images });
 
         await orphanagesRepository.save(orphanage);
 
